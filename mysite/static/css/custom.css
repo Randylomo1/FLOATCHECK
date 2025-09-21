@@ -1,0 +1,78 @@
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #F5A623;
+    --accent-color: #BD10E0;
+    --text-color: #333;
+    --background-color: #f8f9fa;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.navbar {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+    color: var(--primary-color) !important;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #357ABD;
+    border-color: #357ABD;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #D9931F;
+    border-color: #D9931F;
+}
+
+.login-form, .signup-form { max-width: 330px; padding: 15px; margin: auto; text-align: center; }
+
+.password-help {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.password-help:hover {
+    text-decoration: underline;
+}
+
+#password-helptext {
+    display: none;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    background-color: #f8f9fa;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+#password-helptext ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}

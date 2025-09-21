@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Reconciliation #{{ reconciliation.id }} - Float Check{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'rec:reconciliation_list' %}" class="btn btn-light mb-3">
+        <i class="fas fa-arrow-left"></i> Back to Reconciliations
+    </a>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Reconciliation #{{ reconciliation.id }}</h4>
+            <span class="badge {{ reconciliation.get_status_badge_class }}">{{ reconciliation.get_status_display }}</span>
+        </div>
+        <div class="card-body">
+            <p><strong>Created At:</strong> <span class="timestamp" data-timestamp="{{ reconciliation.created_at.isoformat }}">{{ reconciliation.created_at|naturaltime }}</span></p>
+            <p><strong>Last Updated:</strong> <span class="timestamp" data-timestamp="{{ reconciliation.updated_at.isoformat }}">{{ reconciliation.updated_at|naturaltime }}</span></p>
+
+            {% if reconciliation.status == 'pending' %}
+                <div class="alert alert-info">
+                    <strong>Step 1: Upload Your Transaction Files</strong>
+                    <p>Upload your internal and external transaction records in CSV format. You will be asked to map the columns before the reconciliation can be run.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Internal Records</h5>
+                                <p class="card-text">({{ reconciliation.internal_records.count }} uploaded)</p>
+                                <a href="{% url 'rec:upload_records' reconciliation.id 'internal' %}" class="btn btn-primary">Upload Internal CSV</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">External Records</h5>
+                                <p class="card-text">({{ reconciliation.external_records.count }} uploaded)</p>
+                                <a href="{% url 'rec:upload_records' reconciliation.id 'external' %}" class="btn btn-secondary">Upload External CSV</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <form action="{% url 'rec:delete_reconciliation' reconciliation.id %}" method="post" onsubmit="return confirm('Are you sure you want to delete this reconciliation?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Reconciliation</button>
+                </form>
+            {% endif %}
+
+            <hr>
+
+            <h5 class="mt-4">Discrepancies</h5>
+
+            {% if reconciliation.status == 'pending' %}
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Ready to Run</h4>
+                    <p>Once you have uploaded both your internal and external records, go back to the list and click "Run Reconciliation".</p>
+                </div>
+            {% elif reconciliation.status == 'in_progress' %}
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Reconciliation in Progress</h4>
+                    <p>This reconciliation is currently being processed. Please check back later for the results.</p>
+                </div>
+            {% elif reconciliation.status == 'failed' %}
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Reconciliation Failed</h4>
+                    <p>An error occurred while processing this reconciliation. Please try running it again.</p>
+                </div>
+            {% elif reconciliation.status == 'completed' %}
+                {% if discrepancies %}
+                    <div class="list-group">
+                        {% for discrepancy in discrepancies %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ discrepancy.get_discrepancy_type_display }}</h6>
+                                </div>
+                                <p class="mb-1">{{ discrepancy.details }}</p>
+                                {% if discrepancy.internal_record %}
+                                <small class="text-muted">Internal Record ID: {{ discrepancy.internal_record.transaction_id }} | Amount: {{ discrepancy.internal_record.amount }}</small><br>
+                                {% endif %}
+                                {% if discrepancy.external_record %}
+                                <small class="text-muted">External Record ID: {{ discrepancy.external_record.transaction_id }} | Amount: {{ discrepancy.external_record.amount }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">No Discrepancies Found!</h4>
+                        <p>Congratulations! All transactions were successfully reconciled.</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function timeSince(date) {
+        let seconds = Math.floor((new Date() - date) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) { return Math.floor(interval) + " years ago"; }
+        interval = seconds / 2592000;
+        if (interval > 1) { return Math.floor(interval) + " months ago"; }
+        interval = seconds / 86400;
+        if (interval > 1) { return Math.floor(interval) + " days ago"; }
+        interval = seconds / 3600;
+        if (interval > 1) { return Math.floor(interval) + " hours ago"; }
+        interval = seconds / 60;
+        if (interval > 1) { return Math.floor(interval) + " minutes ago"; }
+        return "just now";
+    }
+
+    function updateTimestamps() {
+        const timestampElements = document.querySelectorAll('.timestamp');
+        timestampElements.forEach(element => {
+            const timestamp = new Date(element.dataset.timestamp);
+            element.textContent = timeSince(timestamp);
+        });
+    }
+
+    setInterval(updateTimestamps, 5000); // Update every 5 seconds
+    updateTimestamps(); // Initial update
+</script>
+{% endblock %}

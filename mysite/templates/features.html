@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Features{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Features</h1>
+        <p class="lead">Discover the powerful features that make our service the best choice for you.</p>
+    </div>
+
+    <div class="row">
+        {% for feature in features %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-{{ feature.icon }} fa-3x mb-3"></i>
+                    <h5 class="card-title">{{ feature.name }}</h5>
+                    <p class="card-text">{{ feature.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="/signup/" class="btn btn-primary btn-lg">Get Started</a>
+    </div>
+</div>
+{% endblock %}

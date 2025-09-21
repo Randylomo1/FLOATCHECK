@@ -6,6 +6,7 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.python3
+    pkgs.redis
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -24,7 +25,7 @@
           pip install -r mysite/requirements.txt
         '';
         # Open editors for the following files by default, if they exist:
-        default.openFiles = ["README.md" "mysite/mysite/urls.py"];
+        default.openFiles = [ "README.md" "mysite/mysite/urls.py" ];
       };
       # To run something each time the workspace is (re)started, use the `onStart` hook
     };
@@ -33,7 +34,7 @@
       enable = true;
       previews = {
         web = {
-          command = ["./devserver.sh"];
+          command = [ "./devserver.sh" ];
           env = {
             PORT = "$PORT";
           };

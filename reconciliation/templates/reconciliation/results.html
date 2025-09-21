@@ -1,0 +1,25 @@
+{% extends 'reconciliation/base.html' %}
+
+{% block content %}
+  <h2>Reconciliation Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Payment Transaction ID</th>
+        <th>Transaction Transaction ID</th>
+        <th>Status</th>
+        <th>Discrepancy Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reconciliations %}
+        <tr>
+          <td>{{ r.payment.transaction_id }}</td>
+          <td>{{ r.transaction.transaction_id }}</td>
+          <td>{{ r.status }}</td>
+          <td>{{ r.discrepancy_reason }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

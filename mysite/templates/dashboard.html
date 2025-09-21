@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Welcome, {{ user.username }}!</h1>
+        <p class="lead">Here is your financial overview.</p>
+    </div>
+
+    <div class="row">
+        {% include 'components/financial_summary.html' %}
+    </div>
+
+    <div class="row mt-4">
+        {% include 'components/recent_transactions.html' %}
+    </div>
+
+    <div class="row mt-4">
+        {% include 'components/quick_actions.html' %}
+    </div>
+
+    <div class="row mt-4">
+        {% include 'components/charts.html' %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('financialChart').getContext('2d');
+    const financialChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Revenue', 'Expenses', 'Profit'],
+            datasets: [{
+                label: 'Amount',
+                data: [10000, 5000, 5000],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

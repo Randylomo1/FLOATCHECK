@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Map Columns - Float Check{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'rec:reconciliation_detail' reconciliation.id %}" class="btn btn-light mb-3">
+        <i class="fas fa-arrow-left"></i> Back to Reconciliation
+    </a>
+
+    <h2>Map Columns for {{ record_type|title }} Records</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <p>Please map the columns from your CSV file to the required fields.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <label for="transaction_id" class="col-sm-3 col-form-label">Transaction ID</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="transaction_id" name="transaction_id" required>
+                            <option value="">Select a column</option>
+                            {% for column in header %}
+                                <option value="{{ column }}">{{ column }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="amount" class="col-sm-3 col-form-label">Amount</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="amount" name="amount" required>
+                            <option value="">Select a column</option>
+                            {% for column in header %}
+                                <option value="{{ column }}">{{ column }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="date" class="col-sm-3 col-form-label">Date</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="date" name="date" required>
+                            <option value="">Select a column</option>
+                            {% for column in header %}
+                                <option value="{{ column }}">{{ column }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Import Data</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

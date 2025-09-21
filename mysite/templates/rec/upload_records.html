@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload {{ record_type|title }} Records - Float Check{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'rec:reconciliation_detail' reconciliation.id %}" class="btn btn-light mb-3">
+        <i class="fas fa-arrow-left"></i> Back to Reconciliation
+    </a>
+
+    <h2>Upload {{ record_type|title }} Records for Reconciliation #{{ reconciliation.id }}</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

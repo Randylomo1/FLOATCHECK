@@ -1,2 +1,18 @@
-.venv
-__pycache__
+# Environment variables
+.env
+
+# Virtual environment
+.venv/
+venv/
+
+# Django stuff
+*.log
+db.sqlite3
+
+# Python stuff
+__pycache__/
+*.pyc
+
+# IDE stuff
+.idea/
+.vscode/
