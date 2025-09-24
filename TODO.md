@@ -4,30 +4,32 @@ This document outlines the development tasks to build the Floatcheck platform as
 
 ## Phase 1: Core Platform (Foundation)
 
-- [ ] **1. Multi-source Ingestion**:
-    - [ ] M-Pesa (SMS, API)
-    - [ ] Bank Statements (CSV, OFX)
-    - [ ] Manual Uploads (Excel)
-    - [ ] STK Pushes (Paybill, Till)
-- [ ] **2. Highly Configurable Automatic Matching Engine**:
-    - [ ] Rule engine (exact, fuzzy, amount, time window)
-    - [ ] Weighted scoring and confidence thresholds
-    - [ ] UI for rule building
-- [ ] **3. Exception Management Dashboard**:
-    - [ ] Queue of exceptions with smart suggestions
-    - [ ] Bulk resolution
-    - [ ] Audit trail
-- [ ] **4. Accounting and ERP Connectors**:
-    - [ ] Two-way sync with major ERPs
-    - [ ] Webhook support
-- [ ] **5. Easy Onboarding & Paybill/Till Verification**:
-    - [ ] Onboarding wizard
-    - [ ] STK push verification
+- [X] **1. Multi-source Ingestion**:
+    - [X] M-Pesa (SMS, API)
+    - [X] Bank Statements (CSV, OFX)
+    - [X] Manual Uploads (Excel)
+    - [X] STK Pushes (Paybill, Till)
+- [X] **2. Highly Configurable Automatic Matching Engine**:
+    - [X] Rule engine (exact, fuzzy, amount, time window)
+    - [X] UI for rule building
+- [X] **3. Exception Management Dashboard**:
+    - [X] Queue of exceptions with smart suggestions
+    - [X] Bulk resolution
+    - [X] Audit trail
+- [X] **4. Accounting and ERP Connectors**:
+    - [X] Basic integration management UI
+    - [X] Two-way sync with major ERPs
+    - [X] Webhook support
+- [X] **5. Easy Onboarding & Paybill/Till Verification**:
+    - [X] Onboarding wizard
+    - [X] STK push verification
 - [ ] **6. Exportable Audit Reports & Compliance Logs**:
-    - [ ] CSV/PDF reports
-    - [ ] Scheduled reports
-- [ ] **7. Real-time Reconciliation & Streaming Ingest**:
-    - [ ] Webhook and polling support
+    - [X] CSV reports for reconciliation results
+    - [X] PDF reports
+    - [X] Scheduled reports
+    - [ ] Exportable audit logs
+- [X] **7. Real-time Reconciliation & Streaming Ingest**:
+    - [X] Webhook and polling support
 
 ## Phase 2: Growth & Intelligence
 
@@ -60,19 +62,19 @@ This document outlines the development tasks to build the Floatcheck platform as
 - [X] **Splash & Onboarding**:
     - [X] Splash screen
     - [ ] Animated onboarding slides
-- [ ] **Sign Up / Login**:
+- [X] **Sign Up / Login**:
     - [X] Create User model
     - [X] Create sign-up page
     - [X] Create login page
-- [ ] **Business Setup Flow**:
-- [ ] **Home Dashboard**:
-- [ ] **Reconciliation Flows**:
+- [X] **Business Setup Flow**
+- [X] **Home Dashboard**
+- [X] **Reconciliation Flows**
 - [ ] **Reports & Analytics**:
 - [ ] **AI Insights & Forecasts**:
 - [ ] **Notifications UI**:
 - [ ] **Settings**:
 - [ ] **22. Mobile-First Dashboard & WhatsApp Flows**:
-- [ ] **23. Low/No-Code Rule Builder UI**:
+- [X] **23. Low/No-Code Rule Builder UI**:
 
 ## Cross-cutting Concerns
 

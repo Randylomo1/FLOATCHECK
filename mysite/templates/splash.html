@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="3;url=/landing/">
+    <meta http-equiv="refresh" content="3;url={% url 'core:landing' %}">
     <title>FloatCheck</title>
     <style>
         body {
@@ -31,7 +32,7 @@
 </head>
 <body>
     <div class="splash-content">
-        <img src="/static/images/logo.png" alt="FloatCheck Logo" class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="FloatCheck Logo" class="logo">
         <h1>FloatCheck &ndash; Your Smart Cashflow Guardian</h1>
     </div>
 </body>

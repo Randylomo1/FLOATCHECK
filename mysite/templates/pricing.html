@@ -6,28 +6,61 @@
 <div class="container">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Pricing</h1>
-        <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+        <p class="lead">Start reconciling your transactions with ease. We offer a range of plans to suit your business needs, from small businesses to large enterprises. All prices are in Kenyan Shillings (KSh).</p>
     </div>
 
     <div class="row">
-        {% for plan in pricing_plans %}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm text-center">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ plan.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">Free</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">${{ plan.price }} <small class="text-muted">/ mo</small></h1>
+                    <h1 class="card-title pricing-card-title">KSh 0 <small class="text-muted">/ mo</small></h1>
                     <ul class="list-unstyled mt-3 mb-4">
-                        {% for feature in plan.features.all %}
-                        <li>{{ feature.name }}</li>
-                        {% endfor %}
+                        <li>Bank & M-Pesa statement processing</li>
+                        <li>Manual reconciliation</li>
+                        <li>Up to 100 transactions per month</li>
+                        <li>Community support</li>
                     </ul>
-                    <a href="/signup/" class="btn btn-lg btn-block btn-primary">Sign up</a>
+                    <a href="{% url 'core:signup' %}" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Standard</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">KSh 2,500 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Everything in Free</li>
+                        <li>Automated reconciliation</li>
+                        <li>Up to 1,000 transactions per month</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="{% url 'core:signup' %}" class="btn btn-lg btn-block btn-primary">Get started</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Professional</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">KSh 7,500 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Everything in Standard</li>
+                        <li>Automated matching rules</li>
+                        <li>Case management</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="{% url 'core:signup' %}" class="btn btn-lg btn-block btn-primary">Contact us</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

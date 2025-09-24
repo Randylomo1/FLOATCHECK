@@ -18,6 +18,15 @@
             <p><strong>Created At:</strong> <span class="timestamp" data-timestamp="{{ reconciliation.created_at.isoformat }}">{{ reconciliation.created_at|naturaltime }}</span></p>
             <p><strong>Last Updated:</strong> <span class="timestamp" data-timestamp="{{ reconciliation.updated_at.isoformat }}">{{ reconciliation.updated_at|naturaltime }}</span></p>
 
+            {% if reconciliation.status == 'completed' %}
+                <a href="{% url 'rec:download_reconciliation_report' reconciliation.id %}" class="btn btn-success mb-3">
+                    <i class="fas fa-download"></i> Download Report
+                </a>
+                <a href="{% url 'rec:schedule_report' reconciliation.id %}" class="btn btn-info mb-3">
+                    <i class="fas fa-calendar-alt"></i> Schedule Report
+                </a>
+            {% endif %}
+
             {% if reconciliation.status == 'pending' %}
                 <div class="alert alert-info">
                     <strong>Step 1: Upload Your Transaction Files</strong>

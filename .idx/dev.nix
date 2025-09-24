@@ -3,13 +3,38 @@
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
   channel = "stable-24.05"; # or "unstable"
+
+  # Enable the Docker daemon
+  services.docker.enable = true;
+
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.python3
     pkgs.redis
+    pkgs.tesseract
+    pkgs.poppler_utils
+    pkgs.pango
+    pkgs.cairo
+    pkgs.gdk-pixbuf
+    pkgs.gobject-introspection
+    pkgs.glib
+    pkgs.fontconfig
+    pkgs.gcc
+    pkgs.noto-fonts
+    pkgs.docker
+    pkgs.docker-compose
   ];
   # Sets environment variables in the workspace
-  env = {};
+  env = {
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.pango
+      pkgs.cairo
+      pkgs.gdk-pixbuf
+      pkgs.gobject-introspection
+      pkgs.glib
+      pkgs.fontconfig
+    ];
+  };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
@@ -28,6 +53,8 @@
         default.openFiles = [ "README.md" "mysite/mysite/urls.py" ];
       };
       # To run something each time the workspace is (re)started, use the `onStart` hook
+      onStart = {
+      };
     };
     # Enable previews and customize configuration
     previews = {

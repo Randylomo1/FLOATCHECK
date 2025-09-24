@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Exception Queue{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Reconciliation Exception Queue</h2>
+    <p>Transactions that could not be automatically matched and require manual review.</p>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="reconciliation_id" class="col-form-label">Filter by Reconciliation ID:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="reconciliation_id" name="reconciliation_id" class="form-control" value="{{ request.GET.reconciliation_id }}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="list-group">
+        {% for exception in exceptions %}
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Reconciliation #{{ exception.reconciliation.id }} - {{ exception.transaction_id }}</h5>
+                    <small>Source: {{ exception.source|title }}</small>
+                </div>
+                <p class="mb-1">
+                    <strong>Amount:</strong> {{ exception.amount }} | 
+                    <strong>Date:</strong> {{ exception.date }}
+                </p>
+                {% if exception.description %}
+                    <p class="mb-1"><strong>Description:</strong> {{ exception.description }}</p>
+                {% endif %}
+                <div class="mt-2">
+                    <a href="#" class="btn btn-sm btn-success">Match Manually</a>
+                    <a href="#" class="btn btn-sm btn-warning">Create Rule</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No exceptions found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

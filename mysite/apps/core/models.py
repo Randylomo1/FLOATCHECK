@@ -1,8 +1,15 @@
+
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 class User(AbstractUser):
-    pass
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email_verified = models.BooleanField(default=False)
+    email_verification_token = models.UUIDField(default=uuid.uuid4, editable=False)
+    date_joined = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Feature(models.Model):
     name = models.CharField(max_length=100)

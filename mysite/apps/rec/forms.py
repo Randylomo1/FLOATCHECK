@@ -1,4 +1,4 @@
 from django import forms
 
-class CSVUploadForm(forms.Form):
+class FileUploadForm(forms.Form):
     file = forms.FileField()

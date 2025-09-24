@@ -1,24 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}About Us{% endblock %}
+{% block title %}About FloatCheck{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h1 class="text-center mt-5 mb-4">About FloatCheck</h1>
-            <p class="lead text-center">FloatCheck is a powerful and intuitive financial reconciliation application designed to help businesses of all sizes streamline their payment processes. Our platform provides a comprehensive suite of tools for managing and verifying transactions, with a special focus on M-Pesa payments.</p>
+            <p class="lead text-center">FloatCheck is a streamlined financial management and reconciliation tool built to bring clarity and accuracy to your business's financial records. We empower businesses to easily ingest financial documents, process payments, and compare their internal transaction records against external sources, like bank statements or payment processor reports, to instantly identify discrepancies.</p>
 
             <h2 class="mt-5">Our Mission</h2>
-            <p>Our mission is to empower businesses with the tools they need to achieve financial clarity and efficiency. We believe that by simplifying the reconciliation process, we can help our clients save time, reduce errors, and make more informed financial decisions.</p>
+            <p>Our mission is to eliminate the tedious, error-prone process of manual reconciliation and financial data management. We provide a simple, powerful platform that saves businesses valuable time and resources, prevents financial loss, and offers a clear, verifiable picture of their transaction history.</p>
 
-            <h2 class="mt-5">Our Features</h2>
+            <h2 class="mt-5">How It Works</h2>
+            <p>FloatCheck simplifies financial management into a few straightforward steps:</p>
+            <ol>
+                <li><strong>Upload Financial Documents:</strong> Securely upload your financial documents in various formats, including CSV, Excel, PDF, and OFX.</li>
+                <li><strong>Connect Your Systems:</strong> Seamlessly integrate with external accounting and ERP systems like QuickBooks, Xero, and Sage.</li>
+                <li><strong>Automated Reconciliation:</strong> Our powerful engine automatically compares thousands of transactions, identifying discrepancies in real-time.</li>
+                <li><strong>Gain Actionable Insights:</strong> Our intuitive dashboard provides a clear overview of your financial activities, helping you make informed decisions.</li>
+            </ol>
+
+            <h2 class="mt-5">Core Features</h2>
             <ul>
-                <li><strong>Multi-source Ingestion:</strong> Import transaction data from a variety of sources, including M-Pesa (SMS and API), bank statements (CSV, OFX), and manual uploads.</li>
-                <li><strong>Automatic Matching Engine:</strong> Our highly configurable rule engine automatically matches transactions based on your custom criteria, with support for exact, fuzzy, and time-based matching.</li>
-                <li><strong>Exception Management:</strong> Our intuitive dashboard makes it easy to identify and resolve exceptions, with smart suggestions and bulk resolution options.</li>
-                <li><strong>Real-time Reconciliation:</strong> With support for webhooks and polling, you can reconcile transactions in real-time and always have an up-to-date view of your finances.</li>
-                <li><strong>Subscription Management:</strong> Our flexible subscription plans allow you to choose the level of functionality that's right for your business, with a range of pricing options to fit your budget.</li>
+                <li><strong>Effortless File Ingestion:</strong> Upload financial documents in various formats. Our asynchronous processing ensures a smooth and efficient user experience.</li>
+                <li><strong>Business Profile Management:</strong> Create and manage your business profile, including industry, contact information, and more.</li>
+                <li><strong>Seamless Integrations:</strong> Connect with external accounting and ERP systems. Webhooks provide real-time updates and keep your financial data in sync.</li>
+                <li><strong>M-Pesa Payments:</strong> Process M-Pesa payments securely and reliably, with robust validation and error handling.</li>
+                <li><strong>Automated Reconciliation:</strong> Define your own rules and let our system handle the rest, saving you time and reducing errors.</li>
+                <li><strong>Insightful Dashboard:</strong> Track key metrics, view recent transactions, and monitor the reconciliation process in real-time.</li>
             </ul>
         </div>
     </div>

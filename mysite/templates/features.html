@@ -6,25 +6,68 @@
 <div class="container">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Features</h1>
-        <p class="lead">Discover the powerful features that make our service the best choice for you.</p>
+        <p class="lead">Discover the powerful features that make our financial reconciliation service the best choice for your business.</p>
     </div>
 
     <div class="row">
-        {% for feature in features %}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm text-center">
                 <div class="card-body">
-                    <i class="fas fa-{{ feature.icon }} fa-3x mb-3"></i>
-                    <h5 class="card-title">{{ feature.name }}</h5>
-                    <p class="card-text">{{ feature.description }}</p>
+                    <i class="fas fa-file-upload fa-3x mb-3"></i>
+                    <h5 class="card-title">Effortless File Ingestion</h5>
+                    <p class="card-text">Upload financial documents in various formats, including CSV, Excel, PDF, and OFX. Our asynchronous processing ensures a smooth and efficient user experience.</p>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-briefcase fa-3x mb-3"></i>
+                    <h5 class="card-title">Business Profile Management</h5>
+                    <p class="card-text">Create and manage your business profile, including industry, contact information, and more. A personalized dashboard provides a complete overview of your financial activities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-cogs fa-3x mb-3"></i>
+                    <h5 class="card-title">Seamless Integrations</h5>
+                    <p class="card-text">Connect with external accounting and ERP systems like QuickBooks, Xero, and Sage. Webhooks provide real-time updates and keep your financial data in sync.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-credit-card fa-3x mb-3"></i>
+                    <h5 class="card-title">M-Pesa Payments</h5>
+                    <p class="card-text">Process M-Pesa payments securely and reliably. Our dedicated payment module ensures that all transactions are handled with the highest level of security and accuracy.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-balance-scale fa-3x mb-3"></i>
+                    <h5 class="card-title">Automated Reconciliation</h5>
+                    <p class="card-text">Automate the reconciliation process with our powerful and flexible engine. Define your own rules and let our system handle the rest, saving you time and reducing errors.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm text-center">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <h5 class="card-title">Insightful Dashboard</h5>
+                    <p class="card-text">Gain valuable insights into your financial data with our dynamic dashboard. Track key metrics, view recent transactions, and monitor the reconciliation process in real-time.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="text-center mt-5">
-        <a href="/signup/" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="{% url 'core:signup' %}" class="btn btn-primary btn-lg">Get Started</a>
     </div>
 </div>
 {% endblock %}

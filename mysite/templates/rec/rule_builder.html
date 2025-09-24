@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Rule Builder{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Reconciliation Rule Builder</h2>
+    <p>Define rules to automatically handle certain transactions during reconciliation.</p>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Create a New Rule</h5>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Rule Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="field_to_match" class="form-label">Field to Match</label>
+                        <select class="form-select" id="field_to_match" name="field_to_match">
+                            <option value="amount">Amount</option>
+                            <option value="transaction_id">Transaction ID</option>
+                            <option value="description">Description</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="match_type" class="form-label">Match Type</label>
+                        <select class="form-select" id="match_type" name="match_type">
+                            <option value="exact">Exact Match</option>
+                            <option value="contains">Contains</option>
+                            <option value="startswith">Starts With</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="value" class="form-label">Value</label>
+                        <input type="text" class="form-control" id="value" name="value" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Save Rule</button>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h5>Existing Rules</h5>
+    <div class="list-group">
+        {% for rule in rules %}
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ rule.name }}</h5>
+                    <small><a href="{% url 'rec:delete_rule' rule.id %}" class="btn btn-sm btn-danger">Delete</a></small>
+                </div>
+                <p class="mb-1">When <strong>{{ rule.field_to_match }}</strong> <strong>{{ rule.match_type }}</strong> <em>"{{ rule.value }}"</em></p>
+            </div>
+        {% empty %}
+            <p>No rules defined yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -26,35 +26,36 @@
     </div>
 </div>
 
+{{ chart_labels|json_script:"chart-labels" }}
+{{ chart_data|json_script:"chart-data" }}
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const ctx = document.getElementById('financialChart').getContext('2d');
-    const financialChart = new Chart(ctx, {
-        type: 'bar',
+    const labels = JSON.parse(document.getElementById('chart-labels').textContent);
+    const data = JSON.parse(document.getElementById('chart-data').textContent);
+
+    const ctx = document.getElementById('reconciliationChart').getContext('2d');
+    const reconciliationChart = new Chart(ctx, {
+        type: 'pie',
         data: {
-            labels: ['Revenue', 'Expenses', 'Profit'],
+            labels: labels,
             datasets: [{
-                label: 'Amount',
-                data: [10000, 5000, 5000],
+                label: 'Reconciliation Status',
+                data: data,
                 backgroundColor: [
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
                 ],
                 borderColor: [
                     'rgba(75, 192, 192, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
                 ],
                 borderWidth: 1
             }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
         }
     });
 </script>

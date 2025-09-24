@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Integrations</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Your Integrations</h4>
+            <ul class="list-group">
+                {% for integration in integrations %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ integration.get_integration_type_display }}
+                        <div>
+                            <span class="badge badge-{{ integration.is_active|yesno:'success,danger' }} badge-pill">
+                                {{ integration.is_active|yesno:'Active,Inactive' }}
+                            </span>
+                            {% if not integration.is_active %}
+                                <a href="{% url 'integrations:connect_integration' integration.id %}" class="btn btn-sm btn-primary">Connect</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">You have no integrations yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h4>Add Integration</h4>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

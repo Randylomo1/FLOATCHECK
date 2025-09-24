@@ -1,3 +1,4 @@
+
 """
 Django settings for mysite project.
 
@@ -12,31 +13,47 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import sys
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+import environ
+import secrets
+
+# Initialize django-environ
+env = environ.Env(
+    # set casting, default value
+    DJANGO_DEBUG=(bool, True)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 #Add the project root to the Python path
 sys.path.insert(0, str(BASE_DIR.parent))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-# Load environment variables from .env file
-load_dotenv(os.path.join(BASE_DIR.parent, '.env'))
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^=6-_k)oh!n9-fpcd1qd0rf(!8y2!!8cc*so1if(!*ydv@*_dc'
+# SECURITY WARNING: keep the secret key used in in production secret!
+SECRET_KEY = env('DJANGO_SECRET_KEY', default=secrets.token_urlsafe(50))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = ['9000-firebase-floatcheck-1758271047112.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev', '127.0.0.1']
+ALLOWED_HOSTS = [
+    '8000-firebase-floatcheck-1758271047112.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
+    '.cloudworkstations.dev',
+    '127.0.0.1',
+    'localhost',
+    'e2e18a58c990.ngrok-free.app',
+]
 
-CSRF_TRUSTED_ORIGINS = ['https://9000-firebase-floatcheck-1758271047112.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-firebase-floatcheck-1758271047112.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
+    'https://*.cloudworkstations.dev',
+    'https://e2e18a58c990.ngrok-free.app',
+]
 
 
 # Application definition
@@ -50,12 +67,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
-    'apps.core.apps.CoreConfig',
-    'apps.business.apps.BusinessConfig',
-    'apps.rec.apps.RecConfig',
+    'encrypted_model_fields',
+    'core',
+    'business',
+    'rec',
+    'mpesa_p',
+    'file_ingestion',
+    'apps.integrations.apps.IntegrationsConfig',
+    'apps.security_app.apps.SecurityAppConfig',
+    'sendgrid',
 ]
 
 AUTH_USER_MODEL = 'core.User'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'dashboard'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,8 +120,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env.int('DB_PORT'),
     }
 }
 
@@ -108,6 +139,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 12,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -153,8 +187,42 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
+from .beat_schedule import CELERY_BEAT_SCHEDULE
+CELERY_BEAT_SCHEDULE = CELERY_BEAT_SCHEDULE
+
+
 # M-Pesa Configuration
-MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')
-MPESA_PASSKEY = os.getenv('MPESA_PASSKEY')
-MPESA_BUSINESS_SHORT_CODE = os.getenv('MPESA_BUSINESS_SHORT_CODE')
+MPESA_CONSUMER_KEY = env('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET = env('MPESA_CONSUMER_SECRET')
+MPESA_PASSKEY = env('MPESA_PASSKEY')
+MPESA_BUSINESS_SHORT_CODE = env('MPESA_BUSINESS_SHORT_CODE')
+
+# Caching
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Session Engine
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+# Security Settings
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=False)
+SESSION_COOKIE_SECURE = env.bool('DJANGO_SESSION_COOKIE_SECURE', default=False)
+CSRF_COOKIE_SECURE = env.bool('DJANGO_CSRF_COOKIE_SECURE', default=False)
+SECURE_HSTS_SECONDS = 2592000 # 30 days
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+FIELD_ENCRYPTION_KEY = env('FIELD_ENCRYPTION_KEY')
+
+# Email Configuration
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+SENDGRID_API_KEY = env('SENDGRID_API_KEY')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')

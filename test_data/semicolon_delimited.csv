@@ -1,0 +1,5 @@
+Transaction ID;Date;Amount;Description
+TXN2001;2024-02-10;500,50;Monthly Subscription
+TXN2002;2024-02-11;-12,30;Bakery
+TXN2003;2024-02-12;3000,00;Client Payment
+TXN2004;2024-02-13;-250,75;Office Supplies

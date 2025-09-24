@@ -1,43 +1,49 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'splash' %}{% endif %}">
-            <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-            FloatCheck
+        <a class="navbar-brand" href="{% url 'core:dashboard' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Float Check Logo" width="30" height="30" class="d-inline-block align-top">
+            Float Check
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'features' %}">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'pricing' %}">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    <a class="nav-link" href="{% url 'core:dashboard' %}">Home</a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'rec:reconciliation_list' %}">Reconciliation</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'rec:rule_builder' %}">Rule Builder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'rec:exception_queue' %}">Exception Queue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'mpesa_p:pay' %}">Payment</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                            <li><a class="dropdown-item" href="{% url 'core:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'core:logout' %}">Logout</a></li>
+                        </ul>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'core:login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                        <a class="nav-link" href="{% url 'core:signup' %}">Sign up</a>
                     </li>
                 {% endif %}
             </ul>

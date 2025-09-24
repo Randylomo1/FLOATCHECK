@@ -21,7 +21,7 @@
                         <select class="form-select" id="transaction_id" name="transaction_id" required>
                             <option value="">Select a column</option>
                             {% for column in header %}
-                                <option value="{{ column }}">{{ column }}</option>
+                                <option value="{{ column }}" {% if mapping.transaction_id_column == column %}selected{% endif %}>{{ column }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -32,7 +32,7 @@
                         <select class="form-select" id="amount" name="amount" required>
                             <option value="">Select a column</option>
                             {% for column in header %}
-                                <option value="{{ column }}">{{ column }}</option>
+                                <option value="{{ column }}" {% if mapping.amount_column == column %}selected{% endif %}>{{ column }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -43,12 +43,21 @@
                         <select class="form-select" id="date" name="date" required>
                             <option value="">Select a column</option>
                             {% for column in header %}
-                                <option value="{{ column }}">{{ column }}</option>
+                                <option value="{{ column }}" {% if mapping.date_column == column %}selected{% endif %}>{{ column }}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">Import Data</button>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="template_name" placeholder="Save as new template (e.g., 'Bank Statement')">
+                            <button type="submit" class="btn btn-secondary" name="save_template">Save Template</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" name="import_data">Apply Mapping and Import</button>
             </form>
         </div>
     </div>

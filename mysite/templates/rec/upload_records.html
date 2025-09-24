@@ -14,6 +14,20 @@
         <div class="card-body">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+
+                {% if templates.exists %}
+                    <div class="mb-3">
+                        <label for="template" class="form-label">Use a Template</label>
+                        <select class="form-select" id="template" name="template">
+                            <option value="">--- Select a template ---</option>
+                            {% for template in templates %}
+                                <option value="{{ template.id }}">{{ template.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <p class="text-muted">or, upload a new file:</p>
+                {% endif %}
+
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Next</button>
             </form>

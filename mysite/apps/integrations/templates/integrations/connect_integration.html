@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Connect to {{ integration.get_integration_type_display }}</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <p>Click the button below to connect your account.</p>
+
+    <form method="post" action="{% url 'integrations:connect_integration' integration.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Connect Now</button>
+    </form>
+</div>
+{% endblock %}
