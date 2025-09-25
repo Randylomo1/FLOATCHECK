@@ -12,7 +12,7 @@ services:
 
   web:
     build: .
-    command: ["./entrypoint.sh"]
+    command: sh -c "sed -i 's/\r//g' ./entrypoint.sh && chmod +x ./entrypoint.sh && ./entrypoint.sh"
     volumes:
       - .:/app
     ports:
