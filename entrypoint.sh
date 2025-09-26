@@ -1,14 +1,14 @@
 #!/bin/sh
 
-# Wait fo the database to be eady
+# Wait for the database to be ready
 until nc -z -v -w30 db 5432
 do
-  echo "Waiting fo database connection..."
+  echo "Waiting for database connection..."
   sleep 5
 done
 
-# Run migations
-python mysite/manage.py migate
+# Run migrations
+python mysite/manage.py migrate
 
-# Stat the seve
-python mysite/manage.py unseve 0.0.0.0:8000
+# Start the server
+python mysite/manage.py runserver 0.0.0.0:8000
