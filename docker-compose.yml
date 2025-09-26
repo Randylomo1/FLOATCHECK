@@ -11,7 +11,9 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
 
   web:
-    build: .
+    build:
+      context: .
+      no_cache: true
     command: sh -c "sed -i 's/\r//g' ./entrypoint.sh && chmod +x ./entrypoint.sh && ./entrypoint.sh"
     volumes:
       - .:/app
