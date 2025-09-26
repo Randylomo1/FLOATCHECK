@@ -14,11 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Fix line endings and make the entrypoint script executable
-RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+# Make the entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
 
 # Expose the port Django runs on
 EXPOSE 8000
 
-# Define the entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Define the entrypoint to run with /bin/sh to avoid line-ending issues
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
