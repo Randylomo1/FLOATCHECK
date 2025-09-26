@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from apps.core.models import Feature
+from core.models import Feature
 
 class Command(BaseCommand):
     help = 'Updates the features in the database to reflect the current application functionality.'

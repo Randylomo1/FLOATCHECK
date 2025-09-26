@@ -9,8 +9,8 @@ from django.urls import reverse
 from django.conf import settings
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, ContactForm
 from .models import Feature, PricingPlan, User
-from apps.business.models import Business
-from apps.rec.models import Reconciliation, InternalRecord, ExternalRecord, Discrepancy
+from business.models import Business
+from rec.models import Reconciliation, InternalRecord, ExternalRecord, Discrepancy
 
 def splash(request):
     return render(request, 'splash.html')

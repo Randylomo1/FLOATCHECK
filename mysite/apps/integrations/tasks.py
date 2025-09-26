@@ -1,7 +1,8 @@
 
 from celery import shared_task
 from .models import Webhook
-from payments.models import Business, Transaction, PaymentSource
+from business.models import Business
+from payments.models import Transaction, PaymentSource
 from django.utils import timezone
 
 @shared_task

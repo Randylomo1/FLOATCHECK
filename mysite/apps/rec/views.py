@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from .models import Reconciliation, Discrepancy, InternalRecord, ExternalRecord, ColumnMappingTemplate, ReconciliationRule, TransactionException, ScheduledReport
-from apps.business.models import Business
+from business.models import Business
 from .tasks import run_reconciliation
 from .forms import FileUploadForm # Updated form name
 from . import parsers
@@ -193,7 +193,7 @@ def map_columns(request, reconciliation_id, record_type):
         return redirect('rec:upload_records', reconciliation_id=reconciliation.id, record_type=record_type)
 
     mapping = None
-    template__id = request.session.pop('template_id', None)
+    template_id = request.session.pop('template_id', None)
     if template_id:
         mapping = get_object_or_404(ColumnMappingTemplate, id=template_id, business=reconciliation.business)
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from encrypted_model_fields.fields import EncryptedCharField
-from ..business.models import Business
+from business.models import Business
 
 User = get_user_model()
 

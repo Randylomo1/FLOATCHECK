@@ -1,5 +1,5 @@
 from django.db import models
-from apps.business.models import Business
+from business.models import Business
 
 class Reconciliation(models.Model):
     STATUS_CHOICES = (

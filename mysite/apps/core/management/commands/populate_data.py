@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from apps.core.models import Feature, PricingPlan
+from core.models import Feature, PricingPlan
 
 class Command(BaseCommand):
     help = 'Populates the database with initial data for Features and Pricing Plans.'

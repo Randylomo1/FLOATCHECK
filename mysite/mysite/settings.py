@@ -73,8 +73,9 @@ INSTALLED_APPS = [
     'rec',
     'mpesa_p',
     'file_ingestion',
-    'apps.integrations.apps.IntegrationsConfig',
-    'apps.security_app.apps.SecurityAppConfig',
+    'integrations',
+    'security_app',
+    'profiles',
     'sendgrid',
 ]
 
@@ -128,6 +129,14 @@ DATABASES = {
         'PORT': env.int('DB_PORT'),
     }
 }
+
+# Use SQLite for testing
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3_test',
+    }
+
 
 
 # Password validation
