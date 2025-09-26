@@ -11,4 +11,7 @@ done
 python mysite/manage.py migrate
 
 # Start the server
-python mysite/manage.py runserver 0.0.0.0:8000 --noreload
+# python mysite/manage.py runserver 0.0.0.0:8000 --noreload
+
+echo "Entrypoint script finished. Starting sleep..."
+sleep infinity
