@@ -7,8 +7,8 @@ do
   sleep 5
 done
 
-# Run migrations
+# Apply database migrations
 python mysite/manage.py migrate
 
-# Start the server
-python mysite/manage.py runserver 0.0.0.0:8000
+# Start Gunicorn
+gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
