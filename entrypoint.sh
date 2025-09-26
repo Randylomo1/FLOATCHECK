@@ -14,6 +14,5 @@ echo "Applying database migrations..."
 python mysite/manage.py migrate
 echo "Migrations applied."
 
-# The "$@" executes the command passed as the CMD in the Dockerfile
-# In this case, it will run: gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+# Execute the CMD from the Dockerfile (i.e., start Gunicorn)
 exec "$@"
