@@ -3,34 +3,38 @@ services:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
 
   web:
     build: .
+    command: >
+      bash -c "
+        echo 'Waiting for database...'
+        while ! nc -z db 5432; do
+          sleep 0.1
+        done
+        echo 'Database started'
+
+        echo 'Making migrations for rec app...'
+        python mysite/manage.py makemigrations rec
+
+        echo 'Running database migrations...'
+        python mysite/manage.py migrate
+
+        echo 'Starting Gunicorn server...'
+        gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+      "
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
-    env_file:
-      - .env
-    command: >
-      sh -c "
-        echo 'Waiting for database connection...' &&
-        while ! nc -z db 5432; do
-          echo 'Retrying database connection...' &&
-          sleep 1;
-        done &&
-        echo 'Database is ready.' &&
-        python mysite/manage.py migrate &&
-        gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
-      "
 
 volumes:
   postgres_data:
