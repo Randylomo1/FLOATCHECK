@@ -11,5 +11,4 @@ done
 python mysite/manage.py migrate
 
 # Start the server
-# python mysite/manage.py runserver 0.0.0.0:8000
-sleep infinity
+python mysite/manage.py runserver 0.0.0.0:8000
