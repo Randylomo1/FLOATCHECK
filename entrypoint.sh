@@ -10,5 +10,6 @@ done
 # Apply database migrations
 python mysite/manage.py migrate
 
-# Start Gunicorn
-gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+# Keep the container running for debugging
+echo "Container is running. Connect with docker-compose exec web bash"
+tail -f /dev/null
