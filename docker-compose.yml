@@ -20,6 +20,17 @@ services:
       - db
     env_file:
       - .env
+    command: >
+      sh -c "
+        echo 'Waiting for database connection...' &&
+        while ! nc -z db 5432; do
+          echo 'Retrying database connection...' &&
+          sleep 1;
+        done &&
+        echo 'Database is ready.' &&
+        python mysite/manage.py migrate &&
+        gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+      "
 
 volumes:
   postgres_data:
