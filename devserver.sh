@@ -1,13 +1,9 @@
 #!/bin/bash
 
-# Source the .env file to load environment variables
-if [ -f .env ]; then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
+# Stop any currently running services and remove them to ensure a clean start.
+docker-compose down
 
-# Bring up the database service in the background
-docker-compose up -d db
-
-# Run the web service, executing the entrypoint script
-# This ensures the db is ready and migrations run before starting the server.
-docker-compose run --service-ports web /app/entrypoint.sh
+# Bring up all services defined in docker-compose.yml.
+# --build: Rebuild images if files have changed.
+# The `command` in docker-compose.yml will handle waiting for the DB and migrating.
+docker-compose up --build
